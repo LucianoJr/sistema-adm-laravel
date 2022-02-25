@@ -2,10 +2,9 @@
 
 @section('title')
 <h1>Dashboard</h1>
-
 @endsection
 
-@sectio('content')
+@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
