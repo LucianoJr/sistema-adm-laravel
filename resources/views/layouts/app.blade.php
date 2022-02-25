@@ -25,6 +25,24 @@
         @include('layouts.menu-lateral')
         
         <div class="content-wrapper">
+            <section class="content-wrapper">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            @yield('title')
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-teim"><a href="">Home</a></li>
+                                @yield('breadcrumb')
+                            </ol>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
         @yield('content')
         </div>
 
