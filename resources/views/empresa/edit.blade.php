@@ -1,15 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-    <h1>Cadastro de {{ $tipo}}</h1>
+    <h1>Editar {{ $empresa->nome}}</h1>
 @endsection
 
 @section('breadcrumb')
     <li class="breadcrumb-item">
-        <a href="{{ route('empresas.index')}}">Listagem de {{ $tipo }}</a>
-    </li>
-    <li class="breadcrumb-item">
-        <a href="{{ route('empresas.create')}}">Novo {{ $tipo }}</a>
+        <a href="{{ route('empresas.edit', $empresa) }}">Editar</a>
     </li>
 @endsection
 
@@ -23,11 +20,12 @@
                 </div>
                     
                 <div class="card-body">
-                    <form action="{{ route('empresas.store') }}" method="POST">
+                    <form action="{{ route('empresas.update', $empresa) }}" method="POST">
 
-                        <input type="hidden" name="tipo" value="{{ $tipo }}"> 
-                        
+                        @method('PUT')
+
                         @include('empresa.form')
+                        
                     </form>                     
                    
                 </div>

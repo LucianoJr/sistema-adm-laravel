@@ -32,3 +32,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // });
 
 require('../adminLTE/dist/js/adminlte');
+
+require('../adminLTE/plugins/jquery-mask/jquery.mask');
+
+require('./mascaras');

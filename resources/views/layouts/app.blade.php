@@ -41,7 +41,8 @@
                 </div>
 
             </section>
-        @yield('content')
+
+            @yield('content')
         </div>
 
         <footer class="main-footer">

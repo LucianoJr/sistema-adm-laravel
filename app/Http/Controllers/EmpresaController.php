@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use App\Http\Requests\EmpresaRequest;
 
 class EmpresaController extends Controller
 {
@@ -48,9 +49,11 @@ class EmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmpresaRequest $request)
     {
-        Empresa::create($request->all());
+        $empresa = Empresa::create($request->all());
+
+        return \redirect()->route('empresas.show', $empresa->id);
     }
 
     /**
@@ -61,30 +64,31 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        //
+        return 'estou aqui';
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Editando os dados do cadastro
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Empresa $empresa
+     * @return void
      */
-    public function edit($id)
+    public function edit(Empresa $empresa)
     {
-        //
+        return view('empresa.edit', \compact('empresa'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+   /**
+    * Salvar os dados alterados
+    *
+    * @param EmpresaRequest $request
+    * @param Empresa $empresa
+    * @return void
+    */
+    public function update(EmpresaRequest $request, Empresa $empresa)
     {
-        //
+        return \redirect()->route('empresas.show', $empresa);
+        
     }
 
     /**
