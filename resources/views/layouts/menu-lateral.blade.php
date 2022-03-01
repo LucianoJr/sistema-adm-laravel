@@ -9,7 +9,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="info">
-            <a href="" class="d-block">Usuário</a>
+            <a href="" class="d-block">{{ Auth::user()->name }}</a>
 
             <a class="btn btn-danger btn-sm" href="{{ route('logout') }}"	
                 onclick="event.preventDefault();	
@@ -102,6 +102,32 @@
                 <a href="../../index2.html" class="nav-link">
                   <i class="fas fa-chart-pie nav-icon"></i>
                   <p>Relatório Financeiro</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-box"></i>
+              <p>
+                Cadastro
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('produtos.index')}}" class="nav-link">
+                  <i class="fas fa-boxes nav-icon"></i>
+                  <p>Produtos</p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('users.index')}}" class="nav-link">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Usuários</p>
                 </a>
               </li>
             </ul>
