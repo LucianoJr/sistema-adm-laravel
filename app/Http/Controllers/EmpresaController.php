@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmpresaRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class EmpresaController extends Controller
 {
@@ -14,13 +16,10 @@ class EmpresaController extends Controller
      * @param Request $request
      * @return void
      */
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $tipo = $request->tipo;
-
-        if ($tipo !== 'cliente' && $tipo !== 'fornecedor') {
-            return \abort(404);
-        }
+        $this->validaTipo($tipo);
 
         $empresas = Empresa::todasPorTipo($tipo);
 
@@ -32,15 +31,13 @@ class EmpresaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request): View
     {
-        $tipo = $request->tipo;
-
-        if ($tipo !== 'cliente' && $tipo !== 'fornecedor') {
-            return \abort(404);
-        }
+        $this->validaTipo($request->tipo);      
         
-        return view('empresa.create', \compact('tipo'));
+        return view('empresa.create',[
+            'tipo' => $request->tipo
+        ]);
     }
 
     /**
@@ -49,7 +46,7 @@ class EmpresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(EmpresaRequest $request)
+    public function store(EmpresaRequest $request): Response
     {
         $empresa = Empresa::create($request->all());
 
@@ -62,9 +59,9 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Empresa $empresa)
     {
-        return 'estou aqui';
+        return view('empresa.show', \compact('empresa'));
     }
 
     /**
@@ -73,7 +70,7 @@ class EmpresaController extends Controller
      * @param Empresa $empresa
      * @return void
      */
-    public function edit(Empresa $empresa)
+    public function edit(Empresa $empresa): View
     {
         return view('empresa.edit', \compact('empresa'));
     }
@@ -85,10 +82,11 @@ class EmpresaController extends Controller
     * @param Empresa $empresa
     * @return void
     */
-    public function update(EmpresaRequest $request, Empresa $empresa)
+    public function update(EmpresaRequest $request, Empresa $empresa): Response
     {
+        $empresa->update($request->all());
+
         return \redirect()->route('empresas.show', $empresa);
-        
     }
 
     /**
@@ -97,8 +95,25 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Empresa $empresa, Request $request)
     {
-        //
+        $this->validaTipo($request->tipo);        
+    
+        $empresa->delete();
+
+        return \redirect()->route('empresas.index', ['tipo'=>$request->tipo]);
+    }
+
+    /**
+     * Verifica se o tipo é cliente ou fornecedor
+     *
+     * @param string $tipo
+     * @return void
+     */
+    private function validaTipo(string $tipo): void
+    {
+        if ($tipo !== 'cliente' && $tipo !== 'fornecedor') {
+            \abort(404);
+        }
     }
 }

@@ -36,6 +36,7 @@ class CreateEmpresasTable extends Migration
 
             $table->text('observacao', 100)->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }
