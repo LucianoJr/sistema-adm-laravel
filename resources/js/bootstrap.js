@@ -36,3 +36,6 @@ require('../adminLTE/dist/js/adminlte');
 require('../adminLTE/plugins/jquery-mask/jquery.mask');
 
 require('./mascaras');
+
+require('../adminLTE/plugins/select2/js/select2');
+require('./selects');
