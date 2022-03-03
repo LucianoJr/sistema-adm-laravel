@@ -12,42 +12,63 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            
+        <div class="row">         
 
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Movimentos Financeiros</div>
                     <div class="card-body">
-                        <a href="{{ url('/movimentos_financeiros/create') }}" class="btn btn-success btn-sm" title="Novo Movimentos_financeiro">
-                            <i class="fa fa-plus" aria-hidden="true"></i>Novo
-                        </a>
-
-                        <form method="GET" action="{{ url('/movimentos_financeiros') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="search" placeholder="Buscar..." value="{{ request('search') }}">
-                                <span class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </span>
+                        <form method="GET">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="data_inicial">Data Inicial</label>
+                                        <div class="input-group">
+                                            <input id="data_inicio" name="data_inicial" type="text" class="form-control date" value="{{ request('data_inicial') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="data_final">Data Final</label>
+                                        <div class="input-group">
+                                            <input id="data_final" name="data_final" type="text" class="form-control date" value="{{ request('data_final') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group pt-2">
+                                        <label class="control-label" for=""></label>
+                                        <div class="input-group">
+                                            <button class="btn btn-info m-t-xs" title="Buscar Conta"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-
-                        <br/>
-                        <br/>
+                        </form>   
+                        
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Descricao</th><th>Valor</th><th>Data</th><th>Ações</th>
+                                        <th>#</th>
+                                        <th>Tipo</th>
+                                        <th>Empresa</th>
+                                        <th>Descricao</th>
+                                        <th>Valor</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($movimentos_financeiros as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->descricao }}</td><td>R$ {{ $item->valor }}</td><td>{{ $item->data }}</td>
+                                        <td>{{ $item->tipo }}</td>
+                                        <td>{{ $item->empresa->nome }}</td>
+                                        <td>{{ $item->descricao }}</td>
+                                        <td>R$ {{ $item->valor }}</td>
+                                        <td>{{ $item->data }}</td>
                                         <td>
                                             <a href="{{ url('/movimentos_financeiros/' . $item->id) }}" title="View Movimentos_financeiro"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> Detalhes</button></a>
                                             <a href="{{ url('/movimentos_financeiros/' . $item->id . '/edit') }}" title="Edit Movimentos_financeiro"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</button></a>
@@ -62,6 +83,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            <a href="{{ url('/movimentos_financeiros/create') }}" class="btn btn-success btn-sm" title="Novo Movimentos_financeiro">
+                                <i class="fa fa-plus" aria-hidden="true"></i>Novo
+                            </a>
                             <div class="pagination-wrapper"> {!! $movimentos_financeiros->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
