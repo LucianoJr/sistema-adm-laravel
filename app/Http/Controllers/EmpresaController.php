@@ -54,13 +54,15 @@ class EmpresaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Carrega as relações da empresa com movimento estoque e produto, melhorando a consulta do eloquent
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param integer $id
+     * @return View
      */
-    public function show(Empresa $empresa)
+    public function show(int $id): View
     {
+        $empresa = Empresa::buscaPorId($id);
+
         return view('empresa.show', \compact('empresa'));
     }
 

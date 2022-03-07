@@ -29,5 +29,8 @@ Route::middleware('auth')->group(function() {
     Route::resource('movimentos_financeiros', 'MovimentofinanceiroController');
     Route::post('/empresas/buscar-por/nome', 'Selects\EmpresaNomeTipo');
 
+    Route::delete('/movimentos_estoque/{id}', 'MovimentosEstoqueController@destroy')->name('movimentos_estoque.destroy');
+    Route::post('/movimentos_estoque','MovimentosEstoqueController@store')->name('movimentos_estoque.store');
+
 });
 

@@ -33,6 +33,16 @@ class Empresa extends Model
     protected $appends = ['text'];
 
     /**
+     * DEfine a relação com estoque
+     *
+     * @return void
+     */
+    public function movimentosEstoque()
+    {
+        return $this->hasMany('App\Models\MovimentosEstoque');
+    }
+
+    /**
      * Método para filtrar empresa por tipo
      *
      * @param string $tipo
@@ -65,5 +75,15 @@ class Empresa extends Model
             $this->attributes['nome'],
             $this->attributes['razao_social']
         );
+    }
+
+    public static function buscaPorId(int $id)
+    {
+        return self::with(['movimentosEstoque' 
+                => function($query) {
+                $query->latest()->take(5);
+            },
+            'movimentosEstoque.produto'
+        ])->findOrFail($id);
     }
 }
